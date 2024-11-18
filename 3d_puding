@@ -1,0 +1,55 @@
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+}
+let puddingColor, toppingColor;
+
+function setup() {
+  createCanvas(400, 400, WEBGL);  // Membuat kanvas 3D
+  puddingColor = color(255, 204, 102);  // Warna puding (kuning keemasan)
+  toppingColor = color(255, 100, 100);  // Warna topping puding (merah muda)
+}
+
+function draw() {
+  background(200, 150, 255);  // Menambahkan background warna ungu muda
+
+  // Rotasi puding untuk memberikan efek dinamis
+  rotateX(frameCount * 0.01);  // Rotasi pada sumbu X
+  rotateY(frameCount * 0.01);  // Rotasi pada sumbu Y
+
+  // Membuat puding
+  drawPudding();
+}
+
+function drawPudding() {
+  push();
+  // Membuat bagian dasar puding (silinder)
+  fill(puddingColor);  
+  translate(0, 40, 0);  // Menyesuaikan posisi dasar puding agar tidak terlalu tinggi
+  cylinder(80, 100);  // Membuat silinder untuk dasar puding
+  pop();
+
+  push();
+  // Membuat topping puding (seperti krim atau saus)
+  fill(toppingColor);  
+  translate(0, -40, 0);  // Menyesuaikan posisi topping di atas dasar puding
+  sphere(60);  // Membuat bola untuk topping puding
+  pop();
+}
+
+function cylinder(r, h) {
+  // Fungsi custom untuk menggambar silinder
+  beginShape();
+  let sides = 24;  // Jumlah sisi untuk silinder
+  for (let i = 0; i < sides; i++) {
+    let angle = map(i, 0, sides, 0, TWO_PI);
+    let x = r * cos(angle);
+    let y = r * sin(angle);
+    vertex(x, y, 0);  // Titik dasar silinder
+    vertex(x, y, h);  // Titik atas silinder
+  }
+  endShape(CLOSE);
+}
